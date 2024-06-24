@@ -1,10 +1,9 @@
 // Initialization
 const express = require('express');
 const app = express();
-
+require('dotenv').config();
 const mongoose = require('mongoose');
 const Note = require('./models/Note');
-
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -12,8 +11,8 @@ app.use(bodyParser.json());
 // Set the strictQuery option to false to prepare for Mongoose 7
 mongoose.set('strictQuery', false);
 
-const mongoDbPath = "mongodb+srv://tanay:T1234567@cluster0.ds3hgou.mongodb.net/mydatabase?retryWrites=true&w=majority";
-mongoose.connect(mongoDbPath).then(function() {
+
+mongoose.connect(process.env.mongodburl).then(function() {
     app.get("/", function(req, res) {
         const response = { statuscode: res.statusCode, message: "API Works!" };
         res.json(response);
